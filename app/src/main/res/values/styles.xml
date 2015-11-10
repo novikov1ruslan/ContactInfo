@@ -8,4 +8,19 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Name">
+        <item name="android:textColor">@color/name</item>
+        <item name="android:textSize">@dimen/contact_name</item>
+    </style>
+
+    <style name="InfoType">
+        <item name="android:textColor">@color/info_type</item>
+        <item name="android:textSize">@dimen/info_type</item>
+    </style>
+
+    <style name="InfoValue">
+        <item name="android:textColor">@color/info_value</item>
+        <item name="android:textSize">@dimen/info_value</item>
+    </style>
+
 </resources>

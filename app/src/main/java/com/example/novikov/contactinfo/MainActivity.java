@@ -9,40 +9,32 @@ import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.PhoneLookup;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.widgets.SearchScreen;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "PC";
 
     private static final int ANY_CONTACT_INDEX = 0;
-    private static final String TAG = "PC";
-    TextView phoneNumber;
-    View noContactFoundPanel;
-    View contactInfoPanel;
-    TextView contactNumberView;
-    TextView contactNameView;
-    ImageView thumbnailView;
-
     private static final String[] PROJECTION = {Contacts._ID, Contacts.DISPLAY_NAME, Contacts.PHOTO_THUMBNAIL_URI, PhoneLookup.NUMBER};
+
+    private SearchScreen screen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        phoneNumber = (TextView) findViewById(R.id.phone_number);
-        noContactFoundPanel = findViewById(R.id.status);
-        contactInfoPanel = findViewById(R.id.contact_info_panel);
-
-        contactNameView = (TextView) findViewById(R.id.contact_name);
-        contactNumberView = (TextView) findViewById(R.id.contact_number);
-        thumbnailView = (ImageView) findViewById(R.id.thumbnail);
+        screen = (SearchScreen) getLayoutInflater().inflate(R.layout.activity_main, null);
+        setContentView(screen);
     }
 
     public void onSearch(View view) {
@@ -51,8 +43,7 @@ public class MainActivity extends AppCompatActivity {
         String number = "0151 220 87605";
         if (Build.VERSION.SDK_INT >= 21) {
             number = PhoneNumberUtils.normalizeNumber(number);
-        }
-        else {
+        } else {
             number = PhoneNumberUtils.stripSeparators(number);
         }
 
@@ -62,33 +53,15 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, cur.getCount() + " contacts found, retrieving");
             List<PhoneContact> contacts = getContactsFromCursor(cur);
             PhoneContact contact = chooseBestContact(contacts);
-            showContact(contact);
+            screen.showContact(contact);
         } else {
             Log.d(TAG, "no contacts found");
-            showNoContactFound();
+            screen.showNoContactFound();
         }
     }
 
     private Uri getUriForNumber(String number) {
         return Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
-    }
-
-    private void showNoContactFound() {
-        noContactFoundPanel.setVisibility(View.VISIBLE);
-        contactInfoPanel.setVisibility(View.GONE);
-    }
-
-    private void showContact(PhoneContact contact) {
-        Log.v(TAG, "displaying contact info for: " + contact);
-        
-        noContactFoundPanel.setVisibility(View.GONE);
-        contactInfoPanel.setVisibility(View.VISIBLE);
-        contactNameView.setText(contact.getName());
-        if (contact.hasPhoto()) {
-            Uri uri = Uri.parse(contact.getPhotoUri());
-            thumbnailView.setImageURI(uri);
-        }
-        contactNumberView.setText(contact.getPhoneNumber());
     }
 
     private PhoneContact chooseBestContact(List<PhoneContact> contacts) {
@@ -121,4 +94,14 @@ public class MainActivity extends AppCompatActivity {
         contact.setName(cur.getString(cur.getColumnIndex(Contacts.DISPLAY_NAME)));
         return contact;
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.options_menu, menu);
+//
+//        return true;
+        return super.onCreateOptionsMenu(menu);
+    }
+
 }

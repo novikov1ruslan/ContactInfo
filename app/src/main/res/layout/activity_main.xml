@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.widgets.SearchScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,13 +13,17 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/card_margin"
+        android:background="@color/search_background">
 
         <EditText
             android:id="@+id/phone_number"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:hint="@string/enter_number"
+            android:inputType="phone" />
 
         <Button
             android:layout_width="wrap_content"
@@ -43,31 +47,62 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
-        <ImageView
-            android:id="@+id/thumbnail"
-            android:layout_width="@dimen/contact_thumbnail_size"
-            android:layout_height="@dimen/contact_thumbnail_size" />
-
-        <TextView
-            android:id="@+id/contact_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sagi Mizrachi" />
-
-        <TextView
-            android:id="@+id/contact_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="333 222" />
-
-<!--        <ListView
+        <FrameLayout
+            android:id="@+id/thumbnail_frame"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_margin="@dimen/card_margin"
             android:layout_weight="1"
-            android:background="#FFFFFF"></ListView>-->
+            android:background="#FFFFFF">
+
+            <ImageView
+                android:id="@+id/thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/no_thumbnail" />
+
+            <TextView
+                android:id="@+id/contact_name"
+                style="@style/Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginBottom="@dimen/name_margin"
+                android:gravity="center"
+                android:text="@string/test_name" />
+        </FrameLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/card_margin"
+            android:layout_weight="1"
+            android:background="@color/info_card"
+            android:padding="@dimen/info_margin">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/InfoType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Phone Number:" />
+
+                <TextView
+                    android:id="@+id/contact_number"
+                    style="@style/InfoValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="333 222" />
+            </LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+</com.example.widgets.SearchScreen>

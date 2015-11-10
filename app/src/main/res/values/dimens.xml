@@ -3,4 +3,10 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="contact_thumbnail_size">64dp</dimen>
+    <dimen name="contact_name">24dp</dimen>
+    <dimen name="name_margin">8dp</dimen>
+    <dimen name="info_margin">48dp</dimen>
+    <dimen name="info_type">16dp</dimen>
+    <dimen name="info_value">16dp</dimen>
+    <dimen name="card_margin">8dp</dimen>
 </resources>
