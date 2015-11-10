@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ContactInfo</string>
+    <string name="no_contact_found">No Contact Found</string>
+    <string name="search">search</string>
+</resources>
