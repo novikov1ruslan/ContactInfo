@@ -22,7 +22,6 @@ public class PhoneContact {
             return this;
         }
 
-
         public Builder setName(String name) {
             this.name = name;
             return this;

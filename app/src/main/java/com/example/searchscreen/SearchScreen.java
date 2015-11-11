@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.contact.PhoneContact;
-import com.example.novikov.contactinfo.R;
+import com.example.contactinfo.R;
 
 public class SearchScreen extends LinearLayout {
     private static final String TAG = "PC";

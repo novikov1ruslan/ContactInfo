@@ -7,14 +7,14 @@ import android.util.Log;
 import com.example.chooserimpl.ContactChooserImpl;
 import com.example.contact.ContactChooser;
 import com.example.contact.PhoneContact;
-import com.example.novikov.contactinfo.R;
+import com.example.contactinfo.R;
 import com.example.phoneutils.NormalizerFactory;
 import com.example.phoneutils.PhoneNumberNormalizer;
 
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements OnSearchListener {
+public class SearchActivity extends AppCompatActivity implements OnSearchListener {
     private static final String TAG = "PC";
 
     private SearchScreen screen;
