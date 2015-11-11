@@ -1,9 +1,5 @@
 package com.example.contact;
 
-import android.database.Cursor;
-
-import com.example.contact.PhoneContact;
-
 import java.util.List;
 
 public interface ContactChooser {

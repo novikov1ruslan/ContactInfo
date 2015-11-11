@@ -1,15 +1,15 @@
 package com.example.searchscreen;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 
 import com.example.chooserimpl.ContactChooserImpl;
 import com.example.contact.ContactChooser;
 import com.example.contact.PhoneContact;
 import com.example.novikov.contactinfo.R;
+import com.example.phoneutils.NormalizerFactory;
+import com.example.phoneutils.PhoneNumberNormalizer;
 
 import java.util.List;
 
@@ -20,20 +20,22 @@ public class MainActivity extends AppCompatActivity implements OnSearchListener 
     private SearchScreen screen;
 
     private ContactChooser contactChooser;
+    private PhoneNumberNormalizer numberNormalizer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        screen = (SearchScreen) getLayoutInflater().inflate(R.layout.activity_main, null);
+        screen = (SearchScreen) getLayoutInflater().inflate(R.layout.search_screen, null);
         setContentView(screen);
         screen.setOnSearchListener(this);
 
         contactChooser = new ContactChooserImpl(getContentResolver());
+        numberNormalizer = NormalizerFactory.create();
     }
 
     @Override
     public void onSearch(String phoneNumber) {
-        String number = extractNormalizedPhoneNumber(phoneNumber);
+        String number = numberNormalizer.normalize(phoneNumber);
         List<PhoneContact> contacts = contactChooser.getContactsForNumber(number);
 
         if (contacts.isEmpty()) {
@@ -45,14 +47,4 @@ public class MainActivity extends AppCompatActivity implements OnSearchListener 
         }
     }
 
-    private String extractNormalizedPhoneNumber(String phoneNumber) {
-        String number;
-        if (Build.VERSION.SDK_INT >= 21) {
-            number = PhoneNumberUtils.normalizeNumber(phoneNumber);
-        } else {
-            number = PhoneNumberUtils.stripSeparators(phoneNumber);
-        }
-//        number = "0151 220 87605";
-        return number;
-    }
 }

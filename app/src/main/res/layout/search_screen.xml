@@ -38,7 +38,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="@string/no_contact_found"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <LinearLayout
         android:id="@+id/contact_info_panel"
@@ -46,7 +46,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <FrameLayout
             android:id="@+id/thumbnail_frame"
@@ -91,14 +91,14 @@
                     style="@style/InfoType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Phone Number:" />
+                    android:text="@string/phone_number" />
 
                 <TextView
                     android:id="@+id/contact_number"
                     style="@style/InfoValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="333 222" />
+                    android:text="@string/test_number" />
             </LinearLayout>
         </RelativeLayout>
 
