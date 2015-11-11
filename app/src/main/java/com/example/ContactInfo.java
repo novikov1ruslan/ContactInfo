@@ -1,4 +1,4 @@
-package com.example.novikov.contactinfo;
+package com.example;
 
 import android.content.ContentResolver;
 import android.content.Context;
