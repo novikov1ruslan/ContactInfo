@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.example.chooserimpl.ContactChooserImpl;
+import com.example.chooserimpl.ContactUtils;
 import com.example.contact.ContactChooser;
 import com.example.contact.PhoneContact;
 import com.example.contactinfo.R;
@@ -16,11 +17,13 @@ import java.util.List;
 
 public class SearchActivity extends AppCompatActivity implements OnSearchListener {
     private static final String TAG = "PC";
+    private static final String CONTACT = "CONTACT";
 
     private SearchScreen screen;
 
     private ContactChooser contactChooser;
     private PhoneNumberNormalizer numberNormalizer;
+    private PhoneContact contact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,41 @@ public class SearchActivity extends AppCompatActivity implements OnSearchListene
 
         contactChooser = new ContactChooserImpl(getContentResolver());
         numberNormalizer = NormalizerFactory.create();
+
+        if (savedInstanceState != null) {
+            restoreActivityState(savedInstanceState);
+        }
+    }
+
+    private void restoreActivityState(Bundle savedInstanceState) {
+        Log.d(TAG, "restoring activity state");
+        String contactJson = savedInstanceState.getString(CONTACT);
+        if (contactJson != null) {
+            contact = ContactUtils.fomJson(contactJson);
+            Log.d(TAG, contact + " restored");
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (contact == null) {
+            screen.showNoContactFound();
+        } else {
+            screen.showContact(contact);
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        saveActivityState(outState);
+    }
+
+    private void saveActivityState(Bundle outState) {
+        if (contact != null) {
+            outState.putString(CONTACT, ContactUtils.toJson(contact));
+        }
     }
 
     @Override
@@ -43,7 +81,8 @@ public class SearchActivity extends AppCompatActivity implements OnSearchListene
             screen.showNoContactFound();
         } else {
             Log.d(TAG, contacts.size() + " contacts found, retrieving");
-            screen.showContact(contactChooser.chooseBestContact(contacts));
+            contact = contactChooser.chooseBestContact(contacts);
+            screen.showContact(contact);
         }
     }
 
