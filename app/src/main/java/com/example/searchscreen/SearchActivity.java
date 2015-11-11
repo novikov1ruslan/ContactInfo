@@ -12,8 +12,6 @@ import com.example.contactinfo.R;
 import com.example.phoneutils.NormalizerFactory;
 import com.example.phoneutils.PhoneNumberNormalizer;
 
-import java.util.List;
-
 
 public class SearchActivity extends AppCompatActivity implements OnSearchListener {
     private static final String TAG = "PC";
@@ -74,14 +72,13 @@ public class SearchActivity extends AppCompatActivity implements OnSearchListene
     @Override
     public void onSearch(String phoneNumber) {
         String number = numberNormalizer.normalize(phoneNumber);
-        List<PhoneContact> contacts = contactChooser.getContactsForNumber(number);
+        contact = contactChooser.chooseBestContactForNumber(number);
 
-        if (contacts.isEmpty()) {
-            Log.d(TAG, "no contacts found");
+        if (contact == null) {
+            Log.d(TAG, "no contact found");
             screen.showNoContactFound();
         } else {
-            Log.d(TAG, contacts.size() + " contacts found, retrieving");
-            contact = contactChooser.chooseBestContact(contacts);
+            Log.d(TAG, contact + " found");
             screen.showContact(contact);
         }
     }
