@@ -7,13 +7,11 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.contact.PhoneContact;
-import com.example.contact.ThumbnailUtils;
 import com.example.contactinfo.R;
 
 import java.io.IOException;

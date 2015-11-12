@@ -1,4 +1,4 @@
-package com.example.contact;
+package com.example.searchscreen;
 
 import android.content.ContentResolver;
 import android.graphics.Bitmap;
