@@ -1,6 +1,6 @@
 package com.example.searchscreen;
 
-public interface OnSearchListener {
+public interface OnSearchActionListener {
 
     /**
      * Fired when search needs to be performed

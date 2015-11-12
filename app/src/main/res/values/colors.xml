@@ -9,4 +9,5 @@
     <color name="info_value">#000000</color>
     <color name="info_card">#FFFFFF</color>
     <color name="search_background">#FFFFFF</color>
+    <color name="no_thumbnail_backgroud">#FFFFFF</color>
 </resources>

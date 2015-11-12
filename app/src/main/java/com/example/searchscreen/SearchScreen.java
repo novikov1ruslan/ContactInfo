@@ -1,7 +1,9 @@
 package com.example.searchscreen;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -10,19 +12,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.contact.PhoneContact;
+import com.example.contact.ThumbnailUtils;
 import com.example.contactinfo.R;
+
+import java.io.IOException;
 
 public class SearchScreen extends LinearLayout {
     private static final String TAG = "PC";
 
     private TextView phoneNumberView;
-    private View noContactFoundPanel;
+    private TextView statusText;
     private View contactInfoPanel;
     private TextView contactNumberView;
     private TextView contactNameView;
     private ImageView thumbnailView;
     private View thumbnailBackground;
-    private OnSearchListener onSearchListener;
+    private OnSearchActionListener onSearchListener;
+    private View searchButton;
 
     public SearchScreen(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -33,14 +39,15 @@ public class SearchScreen extends LinearLayout {
         super.onFinishInflate();
 
         phoneNumberView = (TextView) findViewById(R.id.phone_number);
-        noContactFoundPanel = findViewById(R.id.status);
+        statusText = (TextView) findViewById(R.id.status);
         contactInfoPanel = findViewById(R.id.contact_info_panel);
 
         contactNameView = (TextView) findViewById(R.id.contact_name);
         contactNumberView = (TextView) findViewById(R.id.contact_number);
         thumbnailView = (ImageView) findViewById(R.id.thumbnail);
         thumbnailBackground = findViewById(R.id.thumbnail_frame);
-        findViewById(R.id.search_btn).setOnClickListener(new OnClickListener() {
+        searchButton = findViewById(R.id.search_btn);
+        searchButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onSearchListener == null) {
@@ -53,27 +60,49 @@ public class SearchScreen extends LinearLayout {
     }
 
     public void showNoContactFound() {
-        noContactFoundPanel.setVisibility(View.VISIBLE);
+        statusText.setText(R.string.no_contact_found);
+        searchButton.setEnabled(true);
+        statusText.setVisibility(View.VISIBLE);
         contactInfoPanel.setVisibility(View.GONE);
     }
 
     public void showContact(PhoneContact contact) {
         Log.v(TAG, "displaying contact info for: " + contact);
 
-        noContactFoundPanel.setVisibility(View.GONE);
+        statusText.setVisibility(View.GONE);
         contactInfoPanel.setVisibility(View.VISIBLE);
+        searchButton.setEnabled(true);
         contactNameView.setText(contact.getName());
         if (contact.hasPhoto()) {
+
             Uri uri = Uri.parse(contact.getPhotoUri());
-            thumbnailView.setImageURI(uri);
+            try {
+                Bitmap bm = ThumbnailUtils.getBitmapFromUri(uri, getContext().getContentResolver());
+                thumbnailView.setImageBitmap(bm);
+                thumbnailBackground.setBackgroundColor(ThumbnailUtils.getPhotoBackground(bm));
+            } catch (IOException ioe) {
+                Log.w(TAG, "exception while setting thumbnail", ioe);
+            }
+        } else {
+            thumbnailView.setImageResource(R.drawable.no_thumbnail);
+//            int color = getResources().getColor(R.color.no_thumbnail_backgroud);
+            int color = ContextCompat.getColor(getContext(), R.color.no_thumbnail_backgroud);
+            thumbnailBackground.setBackgroundColor(color);
         }
-//        Palette palette = Palette.from(thumbnailView.getDrawingCache()).generate();
-//        int photoBackground = palette.getDarkMutedColor(0);
-//        thumbnailBackground.setBackgroundColor(photoBackground);
+
         contactNumberView.setText(contact.getPhoneNumber());
     }
 
-    public void setOnSearchListener(OnSearchListener listener) {
+    public void setOnSearchListener(OnSearchActionListener listener) {
         this.onSearchListener = listener;
+    }
+
+    public void setError(CharSequence message) {
+        phoneNumberView.setError(message);
+    }
+
+    public void showQueryInProgress() {
+        searchButton.setEnabled(false);
+        statusText.setText(R.string.searching);
     }
 }

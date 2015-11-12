@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">ContactInfo</string>
+    <string name="app_name">Contact Info</string>
     <string name="no_contact_found">No Contact Found</string>
     <string name="search">search</string>
     <string name="enter_number">Enter phone number</string>
     <string name="phone_number">Phone Number:</string>
+    <string name="searching">Searching…</string>
 </resources>
