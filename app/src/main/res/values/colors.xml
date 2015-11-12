@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="background">#FFECB3</color>
+    <color name="background">@color/primary_light</color>
     <color name="name">#FFFFFF</color>
-    <color name="info_type">#888888</color>
-    <color name="info_value">#000000</color>
+    <color name="info_type">@color/secondary_text</color>
+    <color name="info_value">@color/primary_text</color>
     <color name="info_card">#FFFFFF</color>
     <color name="search_background">#FFFFFF</color>
-    <color name="no_thumbnail_backgroud">#FFFFFF</color>
+    <color name="no_thumbnail_background">@color/primary_dark</color>
 </resources>

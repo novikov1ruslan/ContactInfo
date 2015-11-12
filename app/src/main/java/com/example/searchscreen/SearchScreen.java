@@ -85,8 +85,8 @@ public class SearchScreen extends LinearLayout {
             }
         } else {
             thumbnailView.setImageResource(R.drawable.no_thumbnail);
-//            int color = getResources().getColor(R.color.no_thumbnail_backgroud);
-            int color = ContextCompat.getColor(getContext(), R.color.no_thumbnail_backgroud);
+//            int color = getResources().getColor(R.color.no_thumbnail_background);
+            int color = ContextCompat.getColor(getContext(), R.color.no_thumbnail_background);
             thumbnailBackground.setBackgroundColor(color);
         }
 
