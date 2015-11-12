@@ -1,9 +1,11 @@
 package com.example.searchscreen;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
 
 import com.example.chooserimpl.AsyncTaskContactChooser;
 import com.example.chooserimpl.ContactUtils;
@@ -24,11 +26,13 @@ public class SearchActivity extends AppCompatActivity implements OnSearchActionL
     private ContactChooser contactChooser;
     private PhoneNumberNormalizer numberNormalizer;
     private PhoneContact contact;
+    private InputMethodManager inputMethodManager;
 
     /**
      * passed to {@link ContactChooser#chooseBestContactForNumber(String, SearchResultListener)}
      */
     private final SearchResultListener searchResultListener = new SearchResultListener() {
+
         @Override
         public void onSearchResult(PhoneContact contact) {
             SearchActivity.this.contact = contact;
@@ -39,6 +43,11 @@ public class SearchActivity extends AppCompatActivity implements OnSearchActionL
                 Log.d(TAG, contact + " found");
                 screen.showContact(contact);
             }
+            hideKeyboard();
+        }
+
+        private void hideKeyboard() {
+            inputMethodManager.hideSoftInputFromWindow(screen.getWindowToken(), 0);
         }
     };
 
@@ -53,6 +62,7 @@ public class SearchActivity extends AppCompatActivity implements OnSearchActionL
 
         contactChooser = new AsyncTaskContactChooser(getContentResolver());
         numberNormalizer = NormalizerFactory.create();
+        inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         if (savedInstanceState != null) {
             restoreActivityState(savedInstanceState);

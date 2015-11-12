@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -55,7 +56,7 @@ public class SearchScreen extends LinearLayout {
                 } else {
                     onSearchListener.onSearch(phoneNumberView.getText().toString());
                 }
-            }
+             }
         });
     }
 
